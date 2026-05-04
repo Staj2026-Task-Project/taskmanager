@@ -1,4 +1,4 @@
-package com.project.taskmanager.application.service.impl;
+package com.project.taskmanager.application.service;
 
 import com.project.taskmanager.application.dto.request.GroupCreateRequest;
 import com.project.taskmanager.application.dto.request.UserGroupAddRequest;
