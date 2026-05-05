@@ -8,3 +8,4 @@ public interface GroupRepository {
     Optional<Group> findById(Long id);
     Optional<Group> findByName(String name);
 }
+//

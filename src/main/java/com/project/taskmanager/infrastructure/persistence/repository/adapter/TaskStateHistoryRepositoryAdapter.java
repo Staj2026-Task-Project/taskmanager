@@ -31,3 +31,5 @@ public class TaskStateHistoryRepositoryAdapter implements TaskStateHistoryReposi
                 .collect(Collectors.toList());
     }
 }
+
+//

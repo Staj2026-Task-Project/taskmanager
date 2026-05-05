@@ -45,3 +45,4 @@ public class TaskAssignmentRepositoryAdapter implements TaskAssignmentRepository
                 .collect(Collectors.toList());
     }
 }
+//
