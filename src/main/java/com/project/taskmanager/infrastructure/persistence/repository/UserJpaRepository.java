@@ -1,0 +1,13 @@
+package com.project.taskmanager.infrastructure.persistence.repository;
+
+import com.project.taskmanager.infrastructure.persistence.entity.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity> findByUsernameAndIsActiveTrue(String username);
+    Optional<UserEntity> findByIdAndIsActiveTrue(Long id);
+}
