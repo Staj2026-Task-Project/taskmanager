@@ -2,7 +2,7 @@ package com.project.taskmanager.infrastructure.persistence.repository.adapter;
 
 import com.project.taskmanager.domain.model.TaskAssignment;
 import com.project.taskmanager.domain.repository.TaskAssignmentRepository;
-import com.project.taskmanager.infrastructure.mapper.TaskAssignmentEntityMapper;
+import com.project.taskmanager.infrastructure.mapper.TaskAssignmentMapper;
 import com.project.taskmanager.infrastructure.persistence.repository.jpa.TaskAssignmentJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TaskAssignmentRepositoryAdapter implements TaskAssignmentRepository {
 
     private final TaskAssignmentJpaRepository jpaRepository;
-    private final TaskAssignmentEntityMapper mapper;
+    private final TaskAssignmentMapper mapper;
 
     @Override
     public TaskAssignment save(TaskAssignment taskAssignment) {

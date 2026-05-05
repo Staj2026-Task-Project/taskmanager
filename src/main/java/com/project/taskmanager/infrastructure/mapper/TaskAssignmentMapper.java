@@ -5,7 +5,7 @@ import com.project.taskmanager.infrastructure.persistence.entity.TaskAssignmentE
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface TaskAssignmentEntityMapper {
+public interface TaskAssignmentMapper {
     TaskAssignment toModel(TaskAssignmentEntity entity);
     TaskAssignmentEntity toEntity(TaskAssignment model);
 }

@@ -5,7 +5,7 @@ import com.project.taskmanager.infrastructure.persistence.entity.TaskStateHistor
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface TaskStateHistoryEntityMapper {
+public interface TaskStateHistoryMapper {
     TaskStateHistory toModel(TaskStateHistoryEntity entity);
     TaskStateHistoryEntity toEntity(TaskStateHistory model);
 }

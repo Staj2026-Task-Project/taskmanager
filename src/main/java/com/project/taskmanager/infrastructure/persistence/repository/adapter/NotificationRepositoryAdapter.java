@@ -2,7 +2,7 @@ package com.project.taskmanager.infrastructure.persistence.repository.adapter;
 
 import com.project.taskmanager.domain.model.Notification;
 import com.project.taskmanager.domain.repository.NotificationRepository;
-import com.project.taskmanager.infrastructure.mapper.NotificationEntityMapper;
+import com.project.taskmanager.infrastructure.mapper.NotificationMapper;
 import com.project.taskmanager.infrastructure.persistence.repository.jpa.NotificationJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class NotificationRepositoryAdapter implements NotificationRepository {
 
     private final NotificationJpaRepository jpaRepository;
-    private final NotificationEntityMapper mapper;
+    private final NotificationMapper mapper;
 
     @Override
     public Notification save(Notification notification) {

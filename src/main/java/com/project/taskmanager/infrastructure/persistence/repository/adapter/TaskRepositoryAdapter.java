@@ -2,7 +2,7 @@ package com.project.taskmanager.infrastructure.persistence.repository.adapter;
 
 import com.project.taskmanager.domain.model.Task;
 import com.project.taskmanager.domain.repository.TaskRepository;
-import com.project.taskmanager.infrastructure.mapper.TaskEntityMapper;
+import com.project.taskmanager.infrastructure.mapper.TaskMapper;
 import com.project.taskmanager.infrastructure.persistence.repository.jpa.TaskJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TaskRepositoryAdapter implements TaskRepository {
 
     private final TaskJpaRepository taskJpaRepository;
-    private final TaskEntityMapper taskEntityMapper;
+    private final TaskMapper taskEntityMapper;
 
     @Override
     public Task save(Task task) {

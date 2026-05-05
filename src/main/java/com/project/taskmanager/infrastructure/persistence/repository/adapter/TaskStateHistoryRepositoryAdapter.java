@@ -2,7 +2,7 @@ package com.project.taskmanager.infrastructure.persistence.repository.adapter;
 
 import com.project.taskmanager.domain.model.TaskStateHistory;
 import com.project.taskmanager.domain.repository.TaskStateHistoryRepository;
-import com.project.taskmanager.infrastructure.mapper.TaskStateHistoryEntityMapper;
+import com.project.taskmanager.infrastructure.mapper.TaskStateHistoryMapper;
 import com.project.taskmanager.infrastructure.persistence.repository.jpa.TaskStateHistoryJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class TaskStateHistoryRepositoryAdapter implements TaskStateHistoryRepository {
 
     private final TaskStateHistoryJpaRepository jpaRepository;
-    private final TaskStateHistoryEntityMapper mapper;
+    private final TaskStateHistoryMapper mapper;
 
     @Override
     public TaskStateHistory save(TaskStateHistory history) {

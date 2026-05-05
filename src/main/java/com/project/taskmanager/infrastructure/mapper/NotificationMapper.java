@@ -5,7 +5,7 @@ import com.project.taskmanager.infrastructure.persistence.entity.NotificationEnt
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface NotificationEntityMapper {
+public interface NotificationMapper {
     Notification toModel(NotificationEntity entity);
     NotificationEntity toEntity(Notification model);
 }
