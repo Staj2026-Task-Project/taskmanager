@@ -45,4 +45,3 @@ public class NotificationRepositoryAdapter implements NotificationRepository {
                 .collect(Collectors.toList());
     }
 }
-//

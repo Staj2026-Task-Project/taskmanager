@@ -11,4 +11,3 @@ public interface GroupService {
     void removeUserFromGroup(Long userId, Long groupId);
     void deleteGroup(Long id);
 }
-//

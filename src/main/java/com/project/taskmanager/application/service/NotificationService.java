@@ -11,4 +11,3 @@ public interface NotificationService {
     List<NotificationResponse> getUnreadUserNotifications(Long userId);
     void markAsRead(Long notificationId);
 }
-//

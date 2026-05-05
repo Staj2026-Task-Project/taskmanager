@@ -11,4 +11,3 @@ public interface UserGroupRepository {
     List<UserGroup> findByGroupId(Long groupId);
     Optional<UserGroup> findByUserIdAndGroupIdAndIsActiveTrue(Long userId, Long groupId);
 }
-//

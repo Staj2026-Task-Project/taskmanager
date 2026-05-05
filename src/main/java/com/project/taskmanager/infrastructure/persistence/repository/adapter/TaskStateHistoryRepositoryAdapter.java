@@ -32,4 +32,3 @@ public class TaskStateHistoryRepositoryAdapter implements TaskStateHistoryReposi
     }
 }
 
-//
