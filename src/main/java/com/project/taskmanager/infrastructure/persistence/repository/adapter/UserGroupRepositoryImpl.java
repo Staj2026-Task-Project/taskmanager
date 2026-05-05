@@ -1,10 +1,10 @@
-package com.project.taskmanager.infrastructure.persistence.repository.jpa;
+package com.project.taskmanager.infrastructure.persistence.repository.adapter;
 
 import com.project.taskmanager.domain.model.UserGroup;
 import com.project.taskmanager.domain.repository.UserGroupRepository;
 import com.project.taskmanager.infrastructure.mapper.UserGroupMapper;
 import com.project.taskmanager.infrastructure.persistence.entity.UserGroupEntity;
-import com.project.taskmanager.infrastructure.persistence.repository.UserGroupJpaRepository;
+import com.project.taskmanager.infrastructure.persistence.repository.jpa.UserGroupJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
