@@ -55,4 +55,3 @@ public class NotificationEntity {
         this.updatedAt = OffsetDateTime.now();
     }
 }
-//

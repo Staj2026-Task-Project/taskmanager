@@ -9,4 +9,3 @@ public interface TaskStateHistoryMapper {
     TaskStateHistory toModel(TaskStateHistoryEntity entity);
     TaskStateHistoryEntity toEntity(TaskStateHistory model);
 }
-//
