@@ -9,3 +9,5 @@ public interface TaskAssignmentMapper {
     TaskAssignment toModel(TaskAssignmentEntity entity);
     TaskAssignmentEntity toEntity(TaskAssignment model);
 }
+
+//

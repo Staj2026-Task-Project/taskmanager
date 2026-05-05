@@ -9,3 +9,5 @@ public interface NotificationMapper {
     Notification toModel(NotificationEntity entity);
     NotificationEntity toEntity(Notification model);
 }
+
+//
