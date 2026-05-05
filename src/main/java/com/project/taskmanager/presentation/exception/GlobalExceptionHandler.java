@@ -1,53 +1,45 @@
 package com.project.taskmanager.presentation.exception;
 
-
-import com.project.taskmanager.application.exception.IndividualTaskGroupAssignmentException;
-import com.project.taskmanager.application.exception.TaskNotFoundException;
-import com.project.taskmanager.application.exception.UserNotFoundInTaskContextException;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.dao.OptimisticLockingFailureException;
+import com.project.taskmanager.application.exception.GroupNotFoundException;
+import com.project.taskmanager.application.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
 
-import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleTaskNotFoundException(TaskNotFoundException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, "Not Found", ex.getMessage());
+    @ExceptionHandler({UserNotFoundException.class, GroupNotFoundException.class})
+    public ResponseEntity<Map<String, String>> handleNotFoundExceptions(RuntimeException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", "Bu işlemi yapmak için gerekli yetkiye (ROLE_ADMIN) sahip değilsiniz.");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @ExceptionHandler({
-            IndividualTaskGroupAssignmentException.class,
-            UserNotFoundInTaskContextException.class,
-            IllegalArgumentException.class
-    })
-    public ResponseEntity<ErrorResponse> handleBadRequestExceptions(RuntimeException ex) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Bad Request", ex.getMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-    @ExceptionHandler(OptimisticLockingFailureException.class)
-    public ResponseEntity<ErrorResponse> handleOptimisticLockingFailureException(OptimisticLockingFailureException ex) {
-        return buildErrorResponse(HttpStatus.CONFLICT, "Conflict", "Veri eşzamanlılık hatası: Kayıt başka bir işlem tarafından değiştirilmiş.");
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
-        // Loglama yapılabilir: log.error("Beklenmeyen hata: ", ex);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error", "Sunucuda beklenmeyen bir hata oluştu.");
-    }
-
-    private ResponseEntity<ErrorResponse> buildErrorResponse(HttpStatus status, String error, String message) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .status(status.value())
-                .error(error)
-                .message(message)
-                .timestamp(OffsetDateTime.now())
-                .build();
-        return ResponseEntity.status(status).body(errorResponse);
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, String>> handleRuntimeExceptions(RuntimeException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
