@@ -32,6 +32,12 @@ public class TaskRepositoryAdapter implements TaskRepository {
     }
 
     @Override
+    public Optional<Task> findActiveById(Long id) {
+        return taskJpaRepository.findByIdAndIsActiveTrue(id)
+                .map(taskEntityMapper::toModel);
+    }
+
+    @Override
     public List<Task> findAllActive() {
         return taskJpaRepository.findByIsActiveTrue().stream()
                 .map(taskEntityMapper::toModel)

@@ -44,4 +44,11 @@ public class TaskAssignmentRepositoryAdapter implements TaskAssignmentRepository
                 .map(mapper::toModel)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<TaskAssignment> findByGroupId(Long groupId) {
+        return jpaRepository.findByGroupId(groupId).stream()
+                .map(mapper::toModel)
+                .collect(Collectors.toList());
+    }
 }
