@@ -23,8 +23,8 @@ public class TaskStateHistoryEntity {
     private Long taskAssignmentId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "old_state", length = 20)
-    private TaskState oldState;
+    @Column(name = "previous_state", length = 20)
+    private TaskState previousState;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "new_state", nullable = false, length = 20)
@@ -41,4 +41,3 @@ public class TaskStateHistoryEntity {
         this.changedAt = OffsetDateTime.now();
     }
 }
-

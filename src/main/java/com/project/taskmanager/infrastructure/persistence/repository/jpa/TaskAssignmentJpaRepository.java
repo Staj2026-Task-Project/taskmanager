@@ -10,4 +10,5 @@ import java.util.List;
 public interface TaskAssignmentJpaRepository extends JpaRepository<TaskAssignmentEntity, Long> {
     List<TaskAssignmentEntity> findByTaskId(Long taskId);
     List<TaskAssignmentEntity> findByUserId(Long userId);
+    List<TaskAssignmentEntity> findByGroupId(Long groupId); //  !!!!!  SONRADAN EKLENDIII IHTIYAC HALINDE SILINEBILIR
 }

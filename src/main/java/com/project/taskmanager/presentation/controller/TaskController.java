@@ -31,7 +31,7 @@ public class TaskController {
 
     @GetMapping("/active")
     public ResponseEntity<List<TaskResponse>> getActiveTasks() {
-        List<TaskResponse> responses = taskService.getActiveTasks();
+        List<TaskResponse> responses = taskService.getAllActiveTasks();
         return ResponseEntity.ok(responses);
     }
 

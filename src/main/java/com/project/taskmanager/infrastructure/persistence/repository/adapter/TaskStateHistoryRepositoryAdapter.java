@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,10 +26,15 @@ public class TaskStateHistoryRepositoryAdapter implements TaskStateHistoryReposi
     }
 
     @Override
+    public Optional<TaskStateHistory> findById(Long id) {
+        return jpaRepository.findById(id)
+                .map(mapper::toModel);
+    }
+
+    @Override
     public List<TaskStateHistory> findByTaskAssignmentId(Long assignmentId) {
         return jpaRepository.findByTaskAssignmentId(assignmentId).stream()
                 .map(mapper::toModel)
                 .collect(Collectors.toList());
     }
 }
-

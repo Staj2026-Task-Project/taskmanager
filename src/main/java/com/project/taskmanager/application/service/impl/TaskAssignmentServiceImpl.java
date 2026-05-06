@@ -6,9 +6,11 @@ import com.project.taskmanager.application.dto.response.TaskAssignmentResponse;
 import com.project.taskmanager.application.exception.IndividualTaskGroupAssignmentException;
 import com.project.taskmanager.application.exception.TaskNotFoundException;
 import com.project.taskmanager.application.exception.UserNotFoundInTaskContextException;
+import com.project.taskmanager.application.service.NotificationService;
 import com.project.taskmanager.application.service.TaskAssignmentService;
 import com.project.taskmanager.application.service.UserService;
 import com.project.taskmanager.domain.enums.AssignmentRule;
+import com.project.taskmanager.domain.enums.NotificationType;
 import com.project.taskmanager.domain.enums.TaskState;
 import com.project.taskmanager.domain.model.Task;
 import com.project.taskmanager.domain.model.TaskAssignment;
@@ -32,6 +34,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     private final TaskRepository taskRepository;
     private final UserService userService;
     private final UserGroupRepository userGroupRepository;
+    private final NotificationService notificationService;
     private final TaskAssignmentMapper taskAssignmentMapper;
 
     @Override
@@ -113,6 +116,34 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         } catch (OptimisticLockingFailureException e) {
             throw new RuntimeException("Eşzamanlılık hatası: Bu görev aynı anda başka bir işlem veya kullanıcı tarafından güncellendi. Lütfen tekrar deneyin.", e);
         }
+    }
+
+    @Override
+    @Transactional
+    public void applyPenaltiesForOverdueTasks() {
+        OffsetDateTime now = OffsetDateTime.now();
+
+        taskRepository.findAllActive().stream()
+                .filter(task -> task.getDueDate() != null)
+                .filter(task -> task.getDueDate().isBefore(now))
+                .filter(task -> task.getStatus() != TaskState.DONE)
+                .forEach(task -> taskAssignmentRepository.findByTaskId(task.getId()).stream()
+                        .filter(assignment -> assignment.getTaskState() != TaskState.DONE)
+                        .filter(assignment -> !Boolean.TRUE.equals(assignment.getPenaltyApplied()))
+                        .forEach(assignment -> {
+                            assignment.setPenaltyApplied(true);
+                            assignment.setUpdatedAt(now);
+                            TaskAssignment savedAssignment = taskAssignmentRepository.save(assignment);
+
+                            if (savedAssignment.getUserId() != null) {
+                                notificationService.sendNotification(
+                                        savedAssignment.getUserId(),
+                                        savedAssignment.getId(),
+                                        NotificationType.PENALTY,
+                                        "Görev teslim tarihi geçti: " + task.getTitle()
+                                );
+                            }
+                        }));
     }
 
     private void syncMainTaskState(Long taskId) {
