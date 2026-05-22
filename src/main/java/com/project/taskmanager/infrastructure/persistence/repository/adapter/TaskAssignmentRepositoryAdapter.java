@@ -32,6 +32,13 @@ public class TaskAssignmentRepositoryAdapter implements TaskAssignmentRepository
     }
 
     @Override
+    public List<TaskAssignment> findAll() {
+        return jpaRepository.findAll().stream()
+                .map(mapper::toModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<TaskAssignment> findByTaskId(Long taskId) {
         return jpaRepository.findByTaskId(taskId).stream()
                 .map(mapper::toModel)

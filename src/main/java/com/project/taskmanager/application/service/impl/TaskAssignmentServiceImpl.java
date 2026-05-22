@@ -119,6 +119,34 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
+    public List<TaskAssignmentResponse> getAllAssignments() {
+        return taskAssignmentRepository.findAll().stream()
+                .map(taskAssignmentMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TaskAssignmentResponse> getAssignmentsByUserId(Long userId) {
+        return taskAssignmentRepository.findByUserId(userId).stream()
+                .map(taskAssignmentMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TaskAssignmentResponse> getAssignmentsByTaskId(Long taskId) {
+        return taskAssignmentRepository.findByTaskId(taskId).stream()
+                .map(taskAssignmentMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TaskAssignmentResponse> getAssignmentsByGroupId(Long groupId) {
+        return taskAssignmentRepository.findByGroupId(groupId).stream()
+                .map(taskAssignmentMapper::toResponse)
+                .toList();
+    }
+
+    @Override
     @Transactional
     public void applyPenaltiesForOverdueTasks() {
         OffsetDateTime now = OffsetDateTime.now();
